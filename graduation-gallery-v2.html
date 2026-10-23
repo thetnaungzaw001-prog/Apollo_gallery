@@ -1,0 +1,663 @@
+<div id="grad-app">
+
+  <!-- ============ HEADER BAND (black, split layout) ============ -->
+  <header class="ga-hero">
+    <div class="ga-hero-inner">
+      <div class="ga-hero-text">
+        <span class="ga-kicker">Apollo Global Education &bull; Est. Milestone</span>
+        <h1 class="ga-title">Graduation<span class="ga-title-accent"> Gallery</span></h1>
+        <p class="ga-sub">Our inaugural graduation ceremony &mdash; celebrating achievement, ambition &amp; new beginnings.</p>
+      </div>
+      <div class="ga-stats">
+        <div class="ga-stat"><span class="ga-stat-num">38</span><span class="ga-stat-label">Graduates</span></div>
+        <div class="ga-stat-div"></div>
+        <div class="ga-stat"><span class="ga-stat-num">1st</span><span class="ga-stat-label">Graduating Class</span></div>
+        <div class="ga-stat-div"></div>
+        <div class="ga-stat"><span class="ga-stat-num">2026</span><span class="ga-stat-label">Inaugural Year</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ FEATURED SLIDER (white stage, side controls) ============ -->
+  <section class="ga-slider-panel">
+    <div class="ga-slider-head">
+      <h2 class="ga-section-title"><span class="ga-rule-red"></span>Graduation Highlights</h2>
+      <p class="ga-section-note">A rotating selection from the day &mdash; refreshed at random on every visit</p>
+    </div>
+
+    <div class="ga-slider" id="ga-slider" aria-label="Graduation highlights slideshow">
+      <button class="ga-slide-nav ga-prev" onclick="gaSlideStep(-1)" aria-label="Previous photo">&#10094;</button>
+
+      <div class="ga-stage" id="ga-stage">
+        <img id="ga-slide-img" class="ga-slide-img" src="" alt="Graduation highlight photo">
+        <div class="ga-slide-caption">
+          <span id="ga-slide-cap">&mdash;</span>
+          <span id="ga-slide-count" class="ga-slide-count">0 / 0</span>
+        </div>
+      </div>
+
+      <button class="ga-slide-nav ga-next" onclick="gaSlideStep(1)" aria-label="Next photo">&#10095;</button>
+    </div>
+  </section>
+
+  <!-- ============ TAB-DRIVEN GALLERY VIEW ============ -->
+  <section class="ga-gallery-shell" id="ga-gallery-shell">
+
+    <nav class="ga-tabs" id="ga-tabs" aria-label="Gallery categories"><!-- tabs injected by JS --></nav>
+
+    <div class="ga-tab-body">
+      <div class="ga-toolbar">
+        <span id="ga-current-name" class="ga-current-name">All Moments</span>
+        <span id="ga-current-count" class="ga-current-count"></span>
+      </div>
+      <div class="ga-masonry" id="ga-masonry"><!-- photos injected by JS --></div>
+      <p class="ga-empty" id="ga-empty" style="display:none;">No photos in this category yet &mdash; check back soon.</p>
+    </div>
+
+  </section>
+
+  <!-- ============ LIGHTBOX (full-screen overlay) ============ -->
+  <div class="ga-lightbox" id="ga-lightbox" aria-hidden="true">
+    <button class="ga-lb-close" onclick="gaCloseLightbox()" aria-label="Close">&times;</button>
+    <button class="ga-lb-nav ga-lb-prev" onclick="gaLbStep(-1)" aria-label="Previous photo">&#10094;</button>
+    <figure class="ga-lb-figure">
+      <img id="ga-lb-img" src="" alt="Graduation photo enlarged">
+      <figcaption id="ga-lb-cap" class="ga-lb-cap"></figcaption>
+    </figure>
+    <button class="ga-lb-nav ga-lb-next" onclick="gaLbStep(1)" aria-label="Next photo">&#10095;</button>
+  </div>
+
+</div>
+
+<style>
+/* ================= GRADUATION GALLERY V2 — white main / red secondary / black third / #A5A5A5 bg ================= */
+#grad-app {
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    max-width: 1240px;
+    margin: 0 auto;
+    background: #A5A5A5;
+    padding: 0 0 50px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#grad-app *, #grad-app *::before, #grad-app *::after { box-sizing: inherit; }
+
+/* ---------- Hero band : black split header ---------- */
+.ga-hero {
+    background: #111111;
+    color: #ffffff;
+    padding: 46px 40px;
+}
+.ga-hero-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 34px;
+    flex-wrap: wrap;
+}
+.ga-kicker {
+    display: inline-block;
+    color: #dc3545;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.ga-title {
+    margin: 0 0 12px 0;
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+}
+.ga-title-accent { color: #dc3545; }
+.ga-sub {
+    margin: 0;
+    max-width: 520px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.75);
+}
+.ga-stats {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    background: #ffffff;
+    color: #111111;
+    padding: 22px 30px;
+    border-radius: 10px;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.35);
+}
+.ga-stat { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.ga-stat-num { font-size: 30px; font-weight: 800; color: #111111; line-height: 1.1; }
+.ga-stat:nth-child(3) .ga-stat-num { color: #dc3545; } /* middle stat accented */
+.ga-stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #666;
+    margin-top: 4px;
+    font-weight: 600;
+}
+.ga-stat-div { width: 1px; height: 42px; background: #e2e2e2; }
+
+/* ---------- Slider panel : white card with side arrows ---------- */
+.ga-slider-panel {
+    background: #ffffff;
+    margin: 34px 26px 0 26px;
+    padding: 30px 34px 34px 34px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+}
+.ga-section-title {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+    font-weight: 800;
+    color: #111111;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.ga-rule-red { display: inline-block; width: 34px; height: 4px; background: #dc3545; border-radius: 2px; }
+.ga-section-note { margin: 0 0 22px 46px; font-size: 13px; color: #777; }
+
+.ga-slider { display: flex; align-items: center; gap: 16px; }
+.ga-stage {
+    position: relative;
+    flex: 1;
+    background: #f4f4f4;
+    border-radius: 10px;
+    overflow: hidden;
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ga-slide-img {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    display: block;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+}
+.ga-slide-img.ga-fading { opacity: 0; }
+.ga-slide-caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 34px 20px 14px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0));
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+}
+.ga-slide-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffb3ba;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+.ga-slide-nav {
+    flex: 0 0 auto;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: none;
+    background: #111111;
+    color: #ffffff;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.15s;
+    display: flex; align-items: center; justify-content: center;
+}
+.ga-slide-nav:hover { background: #dc3545; }
+.ga-slide-nav:active { transform: scale(0.94); }
+
+/* ---------- Tab gallery shell : single-view structure ---------- */
+.ga-gallery-shell {
+    background: #ffffff;
+    margin: 34px 26px 0 26px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    overflow: hidden;
+}
+.ga-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 0 22px;
+}
+.ga-tab {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 18px 16px 15px 16px;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #666666;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.25s, border-color 0.25s;
+}
+.ga-tab:hover { color: #111111; }
+.ga-tab.ga-active { color: #dc3545; border-bottom-color: #dc3545; }
+
+.ga-tab-body { padding: 24px 26px 34px 26px; }
+.ga-toolbar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+.ga-current-name { font-size: 18px; font-weight: 800; color: #111111; }
+.ga-current-count { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #dc3545; }
+
+/* Masonry via CSS columns — a deliberately different grid look */
+.ga-masonry {
+    column-count: 4;
+    column-gap: 18px;
+    transition: opacity 0.35s ease;
+}
+.ga-masonry.ga-switching { opacity: 0; }
+@media (max-width: 1100px) { .ga-masonry { column-count: 3; } }
+@media (max-width: 800px)  { .ga-masonry { column-count: 2; } }
+@media (max-width: 520px)  { .ga-masonry { column-count: 1; } }
+
+.ga-photo {
+    break-inside: avoid;
+    margin: 0 0 18px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: zoom-in;
+    background: #f4f4f4;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ga-photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+.ga-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+    pointer-events: none;
+}
+.ga-photo:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(0,0,0,0.22); }
+.ga-photo:hover::after { border-color: #dc3545; }
+.ga-photo:hover img { transform: scale(1.04); }
+.ga-photo-tag {
+    position: absolute;
+    left: 10px; bottom: 10px;
+    background: rgba(17,17,17,0.82);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+.ga-photo:hover .ga-photo-tag { opacity: 1; transform: translateY(0); }
+
+.ga-empty { text-align: center; color: #777; font-size: 14px; padding: 40px 0; }
+
+/* ---------- Lightbox overlay ---------- */
+.ga-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(10,10,10,0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+.ga-lightbox.ga-open { opacity: 1; visibility: visible; }
+.ga-lb-figure { margin: 0; text-align: center; max-width: 88vw; }
+.ga-lb-figure img {
+    max-width: 88vw;
+    max-height: 78vh;
+    border-radius: 6px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.6);
+    display: block;
+    margin: 0 auto;
+}
+.ga-lb-cap { color: #ffffff; font-size: 14px; font-weight: 600; margin-top: 14px; }
+.ga-lb-close {
+    position: absolute;
+    top: 18px; right: 24px;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 40px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+}
+.ga-lb-close:hover { color: #dc3545; transform: rotate(90deg); }
+.ga-lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.06);
+    color: #ffffff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+.ga-lb-nav:hover { background: #dc3545; border-color: #dc3545; }
+.ga-lb-prev { left: 22px; }
+.ga-lb-next { right: 22px; }
+
+/* ---------- Responsive hero / slider ---------- */
+@media (max-width: 760px) {
+    .ga-hero { padding: 34px 22px; }
+    .ga-hero-inner { flex-direction: column; align-items: flex-start; }
+    .ga-stats { width: 100%; justify-content: space-around; padding: 18px 12px; }
+    .ga-slider-panel, .ga-gallery-shell { margin-left: 14px; margin-right: 14px; }
+    .ga-slider-panel { padding: 22px 16px; }
+    .ga-section-note { margin-left: 0; }
+    .ga-slide-img { height: 260px; }
+    .ga-stage { min-height: 260px; }
+    .ga-slide-nav { width: 38px; height: 38px; font-size: 14px; }
+    .ga-tab-body { padding: 18px 14px 24px 14px; }
+    .ga-tabs { padding: 0 10px; }
+    .ga-tab { padding: 14px 10px 12px 10px; font-size: 12px; }
+}
+</style>
+
+<script>
+(function () {
+    'use strict';
+
+    var BASE = 'https://apolloglobaleducation.com/wp-content/uploads/';
+
+    /* ============================================================
+       DATA — edit here. One flat list drives BOTH the tab gallery
+       and the lightbox. Change "cat" to move a photo between
+       categories; add lines to add photos.
+       Categories: ceremony | diplomas | portraits | group |
+                   awards | captoss | family | afterparty
+       ============================================================ */
+    var photos = [
+        // ---- Ceremony ----
+        { cat: 'ceremony', src: BASE + '2026/06/IMG_6609.jpg',            cap: 'Opening Ceremony' },
+        { cat: 'ceremony', src: BASE + '2026/06/IMG_6696.jpg',            cap: 'Ceremony Hall' },
+        { cat: 'ceremony', src: BASE + '2026/06/IMG_6632-3.jpg',          cap: 'Processional' },
+        { cat: 'ceremony', src: BASE + '2026/06/IMG_6625-3.jpg',          cap: 'Stage Setup' },
+        { cat: 'ceremony', src: BASE + '2026/06/viber_image_2026-06-04_15-37-06-400.jpg', cap: 'Guest Speakers' },
+        { cat: 'ceremony', src: BASE + '2026/06/viber_image_2026-06-04_15-34-49-521.jpg', cap: 'Ceremony Moments' },
+
+        // ---- Diploma Presentation ----
+        { cat: 'diplomas', src: BASE + '2026/07/IMG_1739-scaled.jpg',     cap: 'Diploma Handover' },
+        { cat: 'diplomas', src: BASE + '2026/07/IMG_1736-scaled.jpg',     cap: 'Receiving the Certificate' },
+        { cat: 'diplomas', src: BASE + '2026/07/IMG_1741-scaled.jpg',     cap: 'Proud Moment' },
+        { cat: 'diplomas', src: BASE + '2026/07/IMG_1743-scaled.jpg',     cap: 'With the Principal' },
+        { cat: 'diplomas', src: BASE + '2026/07/IMG_1740-scaled.jpg',     cap: 'Class of 2026' },
+        { cat: 'diplomas', src: BASE + '2026/07/IMG_1738-scaled.jpg',     cap: 'Certificate Close-Up' },
+
+        // ---- Student Portraits ----
+        { cat: 'portraits', src: BASE + '2026/01/IMG_4970-1.jpg',         cap: 'Graduate Portrait' },
+        { cat: 'portraits', src: BASE + '2026/01/IMG_4967-1.jpg',         cap: 'Cap & Gown' },
+        { cat: 'portraits', src: BASE + '2026/01/IMG_4968-1.jpg',         cap: 'Studio Session' },
+        { cat: 'portraits', src: BASE + '2026/01/IMG_4969-1.jpg',         cap: 'Portrait Two' },
+        { cat: 'portraits', src: BASE + '2026/01/IMG_4971-1.jpg',         cap: 'Portrait Three' },
+        { cat: 'portraits', src: BASE + '2026/01/IMG_4972-1.jpg',         cap: 'Portrait Four' },
+
+        // ---- Class Group Photos ----
+        { cat: 'group', src: BASE + '2026/06/IMG_7455-scaled.jpg',        cap: 'Full Class Photo' },
+        { cat: 'group', src: BASE + '2026/06/IMG_7450-scaled.jpg',        cap: 'Group Shot — Front Row' },
+        { cat: 'group', src: BASE + '2026/06/IMG_9875-scaled.jpg',        cap: 'Group Shot — Outdoor' },
+        { cat: 'group', src: BASE + '2026/06/IMG_9914-scaled.jpg',        cap: 'Friends Forever' },
+        { cat: 'group', src: BASE + '2026/06/IMG_9870-scaled.jpg',        cap: 'Formal Group Portrait' },
+        { cat: 'group', src: BASE + '2026/06/IMG_7422-scaled.jpg',        cap: 'Whole Cohort' },
+        { cat: 'group', src: BASE + '2026/07/IMG_1032.jpg',               cap: 'Class Reunion Pose' },
+        { cat: 'group', src: BASE + '2026/07/IMG_1036.jpg',               cap: 'Team Spirit' },
+        { cat: 'group', src: BASE + '2026/07/IMG_1037.jpg',               cap: 'Celebrating Together' },
+
+        // ---- Award Winners ----
+        { cat: 'awards', src: BASE + '2026/01/IMG_4975-1.jpg',            cap: 'Award Presentation' },
+        { cat: 'awards', src: BASE + '2026/01/IMG_4973-1.jpg',            cap: 'Scholarship Winner' },
+        { cat: 'awards', src: BASE + '2026/01/IMG_4974-1.jpg',            cap: 'Best Graduate' },
+        { cat: 'awards', src: BASE + '2026/01/IMG_4976-1.jpg',            cap: 'Medal Ceremony' },
+        { cat: 'awards', src: BASE + '2026/01/IMG_4979-1.jpg',            cap: 'Recognition Moment' },
+        { cat: 'awards', src: BASE + '2026/01/IMG_4978-1.jpg',            cap: 'Trophy Photo' },
+
+        // ---- Cap Toss & Celebrations ----
+        { cat: 'captoss', src: BASE + '2026/01/IMG_4326-scaled.jpg',      cap: 'The Big Cheering Moment' },
+        { cat: 'captoss', src: BASE + '2026/01/IMG_4991-1.jpg',           cap: 'Caps in the Air' },
+        { cat: 'captoss', src: BASE + '2026/01/IMG_4996.jpg',             cap: 'Confetti Joy' },
+        { cat: 'captoss', src: BASE + '2026/01/IMG_4994.jpg',             cap: 'Cheers!' },
+        { cat: 'captoss', src: BASE + '2026/01/IMG_4997.jpg',             cap: 'Victory Wave' },
+        { cat: 'captoss', src: BASE + '2026/01/IMG_4330.jpg',             cap: 'Graduation Hugs' },
+
+        // ---- Family Moments ----
+        { cat: 'family', src: BASE + '2026/01/1.jpg',                     cap: 'With Family' },
+        { cat: 'family', src: BASE + '2026/01/3.jpg',                     cap: 'Proud Parents' },
+        { cat: 'family', src: BASE + '2026/01/2.jpg',                     cap: 'Family Portrait' },
+        { cat: 'family', src: BASE + '2026/01/11.jpg',                    cap: 'Generations Together' },
+        { cat: 'family', src: BASE + '2026/01/12.jpg',                    cap: 'Little Congratulations' },
+        { cat: 'family', src: BASE + '2026/01/123.jpg',                   cap: 'Homecoming Welcome' },
+
+        // ---- After Party ----
+        { cat: 'afterparty', src: BASE + '2026/06/viber_image_2026-03-18_15-32-18-786.jpg', cap: 'Party Night' },
+        { cat: 'afterparty', src: BASE + '2026/06/viber_image_2026-03-18_15-31-58-840-Copy.jpg', cap: 'Dance Floor' },
+        { cat: 'afterparty', src: BASE + '2026/06/viber_image_2026-03-18_15-26-31-854.jpg', cap: 'Celebration Cake' },
+        { cat: 'afterparty', src: BASE + '2026/06/viber_image_2026-03-18_15-32-13-364.jpg', cap: 'Toast' },
+        { cat: 'afterparty', src: BASE + '2026/06/viber_image_2026-03-18_15-31-59-306.jpg', cap: 'Night Lights' },
+        { cat: 'afterparty', src: BASE + '2026/06/viber_image_2026-03-18_15-32-13-410.jpg', cap: 'Group Dance' }
+    ];
+
+    var categories = [
+        { id: 'all',        name: 'All Moments' },
+        { id: 'ceremony',   name: 'Ceremony' },
+        { id: 'diplomas',   name: 'Diplomas' },
+        { id: 'portraits',  name: 'Portraits' },
+        { id: 'group',      name: 'Group Photos' },
+        { id: 'awards',     name: 'Awards' },
+        { id: 'captoss',    name: 'Celebrations' },
+        { id: 'family',     name: 'Family' },
+        { id: 'afterparty', name: 'After Party' }
+    ];
+
+    /* ---------------- state ---------------- */
+    var currentCat = 'all';
+    var visibleList = [];      // photos currently rendered (for lightbox stepping)
+    var lbIndex = 0;
+
+    var masonry   = document.getElementById('ga-masonry');
+    var tabsEl    = document.getElementById('ga-tabs');
+    var nameEl    = document.getElementById('ga-current-name');
+    var countEl   = document.getElementById('ga-current-count');
+    var emptyEl   = document.getElementById('ga-empty');
+    var lightbox  = document.getElementById('ga-lightbox');
+    var lbImg     = document.getElementById('ga-lb-img');
+    var lbCap     = document.getElementById('ga-lb-cap');
+
+    function photosFor(cat) {
+        return cat === 'all' ? photos.slice() : photos.filter(function (p) { return p.cat === cat; });
+    }
+
+    /* ---------------- tabs ---------------- */
+    function buildTabs() {
+        categories.forEach(function (c) {
+            var b = document.createElement('button');
+            b.className = 'ga-tab' + (c.id === currentCat ? ' ga-active' : '');
+            b.textContent = c.name;
+            b.setAttribute('data-cat', c.id);
+            b.addEventListener('click', function () { switchCat(c.id); });
+            tabsEl.appendChild(b);
+        });
+    }
+
+    function switchCat(catId) {
+        if (catId === currentCat) return;
+        currentCat = catId;
+
+        tabsEl.querySelectorAll('.ga-tab').forEach(function (t) {
+            t.classList.toggle('ga-active', t.getAttribute('data-cat') === catId);
+        });
+
+        var label = categories.filter(function (c) { return c.id === catId; })[0].name;
+        nameEl.textContent = label;
+
+        masonry.classList.add('ga-switching');
+        setTimeout(function () {
+            renderGrid();
+            masonry.classList.remove('ga-switching');
+        }, 300);
+    }
+
+    /* ---------------- grid ---------------- */
+    function renderGrid() {
+        visibleList = photosFor(currentCat);
+        masonry.innerHTML = '';
+        emptyEl.style.display = visibleList.length ? 'none' : 'block';
+        countEl.textContent = visibleList.length + (visibleList.length === 1 ? ' photo' : ' photos');
+
+        visibleList.forEach(function (p, i) {
+            var fig = document.createElement('div');
+            fig.className = 'ga-photo';
+            fig.setAttribute('role', 'button');
+            fig.setAttribute('tabindex', '0');
+            fig.setAttribute('aria-label', 'Open photo: ' + p.cap);
+
+            var img = document.createElement('img');
+            img.src = p.src;
+            img.alt = p.cap;
+            img.loading = 'lazy';
+
+            var tag = document.createElement('span');
+            tag.className = 'ga-photo-tag';
+            tag.textContent = p.cap;
+
+            fig.appendChild(img);
+            fig.appendChild(tag);
+            fig.addEventListener('click', function () { gaOpenLightbox(i); });
+            fig.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); gaOpenLightbox(i); }
+            });
+            masonry.appendChild(fig);
+        });
+    }
+
+    /* ---------------- lightbox ---------------- */
+    window.gaOpenLightbox = function (i) {
+        lbIndex = i;
+        paintLightbox();
+        lightbox.classList.add('ga-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    };
+    window.gaCloseLightbox = function () {
+        lightbox.classList.remove('ga-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+    window.gaLbStep = function (dir) {
+        if (!visibleList.length) return;
+        lbIndex = (lbIndex + dir + visibleList.length) % visibleList.length;
+        paintLightbox();
+    };
+    function paintLightbox() {
+        var p = visibleList[lbIndex];
+        if (!p) return;
+        lbImg.src = p.src;
+        lbImg.alt = p.cap;
+        lbCap.textContent = p.cap + '  —  ' + (lbIndex + 1) + ' / ' + visibleList.length;
+    }
+
+    lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) window.gaCloseLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (!lightbox.classList.contains('ga-open')) return;
+        if (e.key === 'Escape') window.gaCloseLightbox();
+        if (e.key === 'ArrowLeft')  window.gaLbStep(-1);
+        if (e.key === 'ArrowRight') window.gaLbStep(1);
+    });
+
+    /* ---------------- featured slider (random order each load) ---------------- */
+    var slideOrder = [];
+    var slidePos = 0;
+    var slideTimer = null;
+    var slideImg  = document.getElementById('ga-slide-img');
+    var slideCap  = document.getElementById('ga-slide-cap');
+    var slideCnt  = document.getElementById('ga-slide-count');
+    var sliderEl  = document.getElementById('ga-slider');
+
+    function shuffle(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        }
+        return arr;
+    }
+
+    function showSlide() {
+        var p = photos[slideOrder[slidePos]];
+        slideImg.classList.add('ga-fading');
+        setTimeout(function () {
+            slideImg.src = p.src;
+            slideCap.textContent = p.cap;
+            slideCnt.textContent = (slidePos + 1) + ' / ' + slideOrder.length;
+            slideImg.onload = function () { slideImg.classList.remove('ga-fading'); };
+            // fallback in case cached image fires no load event
+            setTimeout(function () { slideImg.classList.remove('ga-fading'); }, 350);
+        }, 300);
+    }
+
+    window.gaSlideStep = function (dir) {
+        slidePos = (slidePos + dir + slideOrder.length) % slideOrder.length;
+        showSlide();
+        restartAuto();
+    };
+
+    function restartAuto() {
+        clearInterval(slideTimer);
+        slideTimer = setInterval(function () {
+            slidePos = (slidePos + 1) % slideOrder.length;
+            showSlide();
+        }, 5000);
+    }
+
+    sliderEl.addEventListener('mouseenter', function () { clearInterval(slideTimer); });
+    sliderEl.addEventListener('mouseleave', restartAuto);
+
+    /* ---------------- init ---------------- */
+    buildTabs();
+    renderGrid();
+
+    slideOrder = shuffle(photos.map(function (_, i) { return i; }));
+    slideImg.src = photos[slideOrder[0]].src;
+    slideCap.textContent = photos[slideOrder[0]].cap;
+    slideCnt.textContent = '1 / ' + slideOrder.length;
+    restartAuto();
+})();
+</script>
