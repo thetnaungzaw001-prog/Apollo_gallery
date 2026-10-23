@@ -6,13 +6,30 @@
       <div class="cap-icon">🎓</div>
       <p class="hero-kicker">Apollo Global Education</p>
       <h1 class="hero-title">Class of 2026 Graduation</h1>
-      <p class="hero-subtitle">Celebrating achievement, ambition &amp; new beginnings</p>
+      <p class="hero-subtitle">Our inaugural graduation ceremony — celebrating achievement, ambition &amp; new beginnings</p>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num">120+</span><span class="stat-label">Graduates</span></div>
+        <div class="stat"><span class="stat-num">38</span><span class="stat-label">Graduates</span></div>
         <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-num">9</span><span class="stat-label">Events</span></div>
+        <div class="stat"><span class="stat-num">1st</span><span class="stat-label">Graduating Class</span></div>
         <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Photos</span></div>
+        <div class="stat"><span class="stat-num">2026</span><span class="stat-label">Inaugural Year</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Moments Slider -->
+  <div class="slider-section">
+    <div class="slider-inner shadow-down">
+      <p class="slider-kicker">Featured Moments</p>
+      <h2 class="slider-heading">Graduation Highlights</h2>
+      <div class="featured-slider" id="featured-slider" aria-label="Graduation photo slideshow">
+        <img id="slider-img" src="" alt="Graduation highlight photo">
+        <button class="slider-arrow prev" onclick="sliderPrev()" aria-label="Previous photo">&#10094;</button>
+        <button class="slider-arrow next" onclick="sliderNext()" aria-label="Next photo">&#10095;</button>
+        <div class="slider-bottom">
+          <span id="slider-caption" class="slider-caption">Class of 2026</span>
+          <span id="slider-counter" class="slider-counter"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -103,18 +120,6 @@
                 <h3 class="activity-title">Family Celebration Moments</h3>
                 <p class="activity-desc">Families sharing pride and joy on the big day.</p>
                 <button class="activity-btn" onclick="openGallery('family', 'Family Celebration Moments')">View Gallery <span class="btn-arrow">→</span></button>
-            </div>
-        </div>
-
-        <div class="activity-card">
-            <div class="card-img-wrapper shadow-down">
-                <img src="https://apolloglobaleducation.com/wp-content/uploads/2026/06/IMG_0130-scaled.jpg" alt="Candid Shots">
-                <span class="card-badge">Behind</span>
-            </div>
-            <div class="activity-info">
-                <h3 class="activity-title">Behind The Scenes</h3>
-                <p class="activity-desc">Candid preparation moments before the ceremony began.</p>
-                <button class="activity-btn" onclick="openGallery('bts', 'Behind The Scenes')">View Gallery <span class="btn-arrow">→</span></button>
             </div>
         </div>
 
@@ -219,17 +224,6 @@
             </div>
         </div>
 
-        <div id="gallery-bts" class="gallery-images-container">
-            <div class="gallery-images">
-                <div class="full-res-img-box shadow-down" onclick="toggleZoom(this)"><img src="https://apolloglobaleducation.com/wp-content/uploads/2026/06/IMG_0130-scaled.jpg" alt="Photo"></div>
-                <div class="full-res-img-box shadow-down" onclick="toggleZoom(this)"><img src="https://apolloglobaleducation.com/wp-content/uploads/2026/06/IMG_0068-scaled.jpg" alt="Photo"></div>
-                <div class="full-res-img-box shadow-down" onclick="toggleZoom(this)"><img src="https://apolloglobaleducation.com/wp-content/uploads/2026/06/IMG_0082-scaled.jpg" alt="Photo"></div>
-                <div class="full-res-img-box shadow-down" onclick="toggleZoom(this)"><img src="https://apolloglobaleducation.com/wp-content/uploads/2026/06/IMG_0088-scaled.jpg" alt="Photo"></div>
-                <div class="full-res-img-box shadow-down" onclick="toggleZoom(this)"><img src="https://apolloglobaleducation.com/wp-content/uploads/2026/06/IMG_0102-scaled.jpg" alt="Photo"></div>
-                <div class="full-res-img-box shadow-down" onclick="toggleZoom(this)"><img src="https://apolloglobaleducation.com/wp-content/uploads/2026/06/IMG_0108-scaled.jpg" alt="Photo"></div>
-            </div>
-        </div>
-
         <div id="gallery-party" class="gallery-images-container">
             <div class="gallery-images">
                 <div class="full-res-img-box shadow-down" onclick="toggleZoom(this)"><img src="https://apolloglobaleducation.com/wp-content/uploads/2026/07/IMG_1739-scaled.jpg" alt="Photo"></div>
@@ -260,8 +254,7 @@
 
 /* --- Hero Header --- */
 .grad-hero {
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-    border-bottom: 5px solid #dc3545;
+    background: linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%);
     text-align: center;
     padding: 45px 20px 35px;
     position: relative;
@@ -324,6 +317,71 @@
 .stat-num { font-size: 26px; font-weight: 800; color: #dc3545; }
 .stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #111; }
 .stat-divider { width: 1px; height: 40px; background: rgba(0,0,0,0.2); }
+
+/* --- Featured Moments Slider --- */
+.slider-section { max-width: 900px; margin: 30px auto 0; padding: 0 20px; box-sizing: border-box; }
+.slider-inner { background: #ffffff; border-radius: 12px; padding: 25px 25px 30px; }
+.slider-kicker {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #dc3545;
+    text-align: center;
+    margin: 0 0 4px 0;
+}
+.slider-heading { text-align: center; color: #111111; font-size: 24px; margin: 0 0 18px 0; font-weight: 800; }
+.featured-slider {
+    position: relative;
+    background: #f8f9fa;
+    border: 2px solid #e5e5e5;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 460px;
+}
+.featured-slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    opacity: 1;
+    transition: opacity 0.7s ease;
+}
+.featured-slider img.switching { opacity: 0; }
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(17, 17, 17, 0.55);
+    color: #ffffff;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+    z-index: 3;
+}
+.slider-arrow:hover { background: #dc3545; }
+.slider-arrow.prev { left: 12px; }
+.slider-arrow.next { right: 12px; }
+.slider-bottom {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0));
+    z-index: 2;
+}
+.slider-caption { color: #ffffff; font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
+.slider-counter { color: rgba(255,255,255,0.85); font-size: 13px; }
+@media (max-width: 600px) {
+    .featured-slider { height: 300px; }
+    .slider-inner { padding: 18px 15px 22px; }
+}
 
 .panels-window {
     position: relative;
@@ -532,7 +590,7 @@
 </style>
 
 <script>
-const galleries = ['ceremony', 'diploma', 'portraits', 'groups', 'awards', 'captoss', 'family', 'bts', 'party'];
+const galleries = ['ceremony', 'diploma', 'portraits', 'groups', 'awards', 'captoss', 'family', 'party'];
 
 function toggleZoom(element) {
     const parentContainer = element.closest('.gallery-images');
@@ -602,4 +660,82 @@ function closeGallery() {
         windowContainer.style.minHeight = '600px';
     }, 1050);
 }
+
+/* ===== Featured Moments Slider (random shuffle, auto-play) ===== */
+// Add your graduation photo URLs below — they will be shown in random order.
+const sliderPhotos = [
+    { src: 'https://apolloglobaleducation.com/wp-content/uploads/2026/01/IMG_4970-1.jpg', caption: 'Graduation Ceremony 2026' },
+    { src: 'https://apolloglobaleducation.com/wp-content/uploads/2026/01/IMG_4975-1.jpg', caption: 'Diploma Presentation' },
+    { src: 'https://apolloglobaleducation.com/wp-content/uploads/2026/01/IMG_4326-scaled.jpg', caption: 'Student Portraits' },
+    { src: 'https://apolloglobaleducation.com/wp-content/uploads/2026/01/4.jpg', caption: 'Class Group Photos' },
+    { src: 'https://apolloglobaleducation.com/wp-content/uploads/2026/06/viber_image_2026-03-18_15-32-18-786.jpg', caption: 'Award Winners' },
+    { src: 'https://apolloglobaleducation.com/wp-content/uploads/2026/06/IMG_6609.jpg', caption: 'Cap Toss & Celebrations' },
+    { src: 'https://apolloglobaleducation.com/wp-content/uploads/2026/06/IMG_7455-scaled.jpg', caption: 'Family Celebration Moments' },
+    { src: 'https://apolloglobaleducation.com/wp-content/uploads/2026/07/IMG_1739-scaled.jpg', caption: 'Graduation After Party' }
+];
+
+let shuffledPhotos = [];
+let sliderIndex = 0;
+let sliderTimer = null;
+const SLIDE_INTERVAL = 5000; // seconds between auto slides
+
+function shuffleArray(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function renderSliderPhoto() {
+    const img = document.getElementById('slider-img');
+    const caption = document.getElementById('slider-caption');
+    const counter = document.getElementById('slider-counter');
+    if (!img || shuffledPhotos.length === 0) return;
+
+    const photo = shuffledPhotos[sliderIndex];
+    img.classList.add('switching');
+    setTimeout(() => {
+        img.src = photo.src;
+        caption.innerText = photo.caption;
+        counter.innerText = (sliderIndex + 1) + ' / ' + shuffledPhotos.length;
+        img.onload = () => img.classList.remove('switching');
+        // fallback in case image is cached and onload fires early
+        setTimeout(() => img.classList.remove('switching'), 80);
+    }, 300);
+}
+
+function sliderNext() {
+    sliderIndex = (sliderIndex + 1) % shuffledPhotos.length;
+    renderSliderPhoto();
+    restartSliderTimer();
+}
+
+function sliderPrev() {
+    sliderIndex = (sliderIndex - 1 + shuffledPhotos.length) % shuffledPhotos.length;
+    renderSliderPhoto();
+    restartSliderTimer();
+}
+
+function restartSliderTimer() {
+    clearInterval(sliderTimer);
+    sliderTimer = setInterval(sliderNext, SLIDE_INTERVAL);
+}
+
+function initSlider() {
+    shuffledPhotos = shuffleArray(sliderPhotos);
+    sliderIndex = 0;
+    renderSliderPhoto();
+    restartSliderTimer();
+
+    // Pause on hover, resume on leave
+    const sliderEl = document.getElementById('featured-slider');
+    if (sliderEl) {
+        sliderEl.addEventListener('mouseenter', () => clearInterval(sliderTimer));
+        sliderEl.addEventListener('mouseleave', restartSliderTimer);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initSlider);
 </script>
